@@ -1,0 +1,22 @@
+[
+{
+  "modid": "compasscoords",
+  "name": "Compass Co-ords",
+  "description": "Small mod that prints a players co-ordinates in chat when right clicking with a compass",
+  "version": "${version}",
+  "mcversion": "$mcversion",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "Quetzi"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ],
+  "requiredMods": [ "Forge" ]
+}
+]
