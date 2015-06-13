@@ -19,21 +19,27 @@ apply plugin: 'forge'
 
 project.ext {
     major = "0"
-    minor = "1"
+    minor = "2"
+    if (System.getenv("BUILD_NUMBER") != null) {
+        build = System.getenv("BUILD_NUMBER")
+    } else {
+        build = "-custom"
+    }
+    mcVersion = "1.8"
 }
-version = "1.7.10-${project.ext.major}.${project.minor}.${System.getenv("BUILD_NUMBER") ?: 0}"
+version = "${project.ext.mcVersion}-${project.ext.major}.${project.minor}.${project.build}"
 group = "net.quetzi.compasscoords"
 archivesBaseName = "CompassCoords"
 
 minecraft {
-    version = "1.7.10-10.13.0.1208"
-    assetDir = "eclipse/assets"
+    version = "${project.ext.mcVersion}-11.14.3.1449"
+    runDir = "eclipse"
 
     // replacing stuff in the source
     replace '@MAJOR@', project.major
     replace '@MINOR@', project.minor
-    replace '@MC_VERSION@', version
-    replace '@BUILD_NUMBER@', System.getenv("BUILD_NUMBER")
+    replace '@MC_VERSION@', project.ext.mcVersion
+    replace '@BUILD_NUMBER@', project.build
 }
 
 processResources {

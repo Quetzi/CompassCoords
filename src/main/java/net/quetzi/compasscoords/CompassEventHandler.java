@@ -1,10 +1,10 @@
 package net.quetzi.compasscoords;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Created by Quetzi on 12/06/15.
@@ -17,7 +17,7 @@ public class CompassEventHandler {
         if (!event.world.isRemote && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() == Items.compass && !event.entityPlayer.capabilities.isCreativeMode) {
             if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
                 if (event.entityPlayer instanceof EntityPlayerMP) {
-                    String message = String.format(CompassCoords.messageText, event.x, event.y, event.z);
+                    String message = String.format(CompassCoords.messageText, event.pos.getX(), event.pos.getY(), event.pos.getZ());
                     ((EntityPlayerMP) event.entityPlayer).mcServer.getConfigurationManager().sendChatMsg(new ChatComponentText(message));
                 }
             }
