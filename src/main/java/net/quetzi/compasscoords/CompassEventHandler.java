@@ -4,7 +4,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 /**
  * Created by Quetzi on 12/06/15.
@@ -12,12 +12,14 @@ import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 public class CompassEventHandler {
 
     @SubscribeEvent
-    public void onItemUse(PlayerUseItemEvent event) {
+    public void onItemUse(PlayerInteractEvent event) {
 
-        if (event.entityPlayer.getCurrentEquippedItem().getItem() == Items.compass && !event.entityPlayer.capabilities.isCreativeMode) {
-            if (event.entityPlayer instanceof EntityPlayerMP) {
-                String message = String.format("My location is: %s, %s, %s", event.entityPlayer.getPlayerCoordinates().posX, event.entityPlayer.getPlayerCoordinates().posY, event.entityPlayer.getPlayerCoordinates().posZ);
-                ((EntityPlayerMP) event.entityPlayer).mcServer.getConfigurationManager().sendChatMsg(new ChatComponentText(message));
+        if (!event.world.isRemote && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() == Items.compass && !event.entityPlayer.capabilities.isCreativeMode) {
+            if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+                if (event.entityPlayer instanceof EntityPlayerMP) {
+                    String message = String.format(CompassCoords.messageText, event.x, event.y, event.z);
+                    ((EntityPlayerMP) event.entityPlayer).mcServer.getConfigurationManager().sendChatMsg(new ChatComponentText(message));
+                }
             }
         }
     }
