@@ -1,8 +1,6 @@
 package net.quetzi.compasscoords;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.util.ChatComponentText;
@@ -14,7 +12,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 public class CompassEventHandler {
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void onItemUse(PlayerInteractEvent event) {
 
         if (!event.world.isRemote && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() == Items.compass && !event.entityPlayer.capabilities.isCreativeMode) {
