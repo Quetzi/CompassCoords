@@ -34,7 +34,7 @@ archivesBaseName = "CompassCoords"
 minecraft {
     version = "${project.ext.mcVersion}-11.14.4.1576-1.8.8"
     runDir = "eclipse"
-
+    mappings = "snapshot_20151123"
     // replacing stuff in the source
     replace '@MAJOR@', project.major
     replace '@MINOR@', project.minor
