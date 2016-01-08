@@ -10,5 +10,5 @@ public class References {
     private static final String MAJOR          = "@MAJOR@";
     private static final String MINOR          = "@MINOR@";
     private static final String BUILD          = "@BUILD_NUMBER@";
-    public static final String VERSION        = "1.7.10-" + MAJOR + "." + MINOR + "." + BUILD;
+    public static final String VERSION        = "@MC_VERSION@-" + MAJOR + "." + MINOR + "." + BUILD;
 }
