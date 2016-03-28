@@ -14,11 +14,11 @@ public class CompassEventHandler {
     @SubscribeEvent
     public void onItemUse(PlayerInteractEvent event) {
 
-        if (!event.world.isRemote && event.entityPlayer.getHeldEquipment() != null && event.entityPlayer.getHeldEquipment() == Items.compass && !event.entityPlayer.capabilities.isCreativeMode) {
-            if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
-                if (event.entityPlayer instanceof EntityPlayerMP) {
-                    String message = String.format("<" + event.entityPlayer.getGameProfile().getName() + "> " + CompassCoords.messageText, event.pos.getX(), event.pos.getY(), event.pos.getZ());
-                    ((EntityPlayerMP) event.entityPlayer).mcServer.getPlayerList().sendChatMsg(new TextComponentString(message));
+        if (!event.getWorld().isRemote && event.getEntityPlayer().getHeldEquipment() != null && event.getEntityPlayer().getHeldEquipment() == Items.compass && !event.getEntityPlayer().capabilities.isCreativeMode) {
+            if (event.getAction() == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+                if (event.getEntityPlayer() instanceof EntityPlayerMP) {
+                    String message = String.format("<" + event.getEntityPlayer().getGameProfile().getName() + "> " + CompassCoords.messageText, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
+                    ((EntityPlayerMP) event.getEntityPlayer()).mcServer.getPlayerList().sendChatMsg(new TextComponentString(message));
                 }
             }
         }
