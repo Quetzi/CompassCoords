@@ -19,22 +19,22 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 project.ext {
     major = "3"
-    minor = "1"
+    minor = "2"
     if (System.getenv("BUILD_NUMBER") != null) {
         build = System.getenv("BUILD_NUMBER")
     } else {
         build = "-custom"
     }
-    mcVersion = "1.10.2"
+    mcVersion = "1.11"
 }
 version = "${project.ext.mcVersion}-${project.ext.major}.${project.minor}.${project.build}"
 group = "net.quetzi.compasscoords"
 archivesBaseName = "CompassCoords"
 
 minecraft {
-    version = "${project.ext.mcVersion}-12.18.1.2044"
+    version = "${project.ext.mcVersion}-13.19.0.2130"
     runDir = "eclipse"
-    mappings = "snapshot_20160802"
+    mappings = "snapshot_20161111"
     // replacing stuff in the source
     replace '@MAJOR@', project.major
     replace '@MINOR@', project.minor
