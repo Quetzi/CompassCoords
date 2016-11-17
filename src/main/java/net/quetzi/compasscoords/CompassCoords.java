@@ -11,7 +11,13 @@ import net.quetzi.compasscoords.references.References;
  * Created by Quetzi on 12/06/15.
  */
 
-@Mod(modid = References.MODID, name = References.NAME, version = References.VERSION, dependencies = "required-after:Forge@[13.19.0.2130,);", acceptableRemoteVersions = "*")
+@Mod(modid = References.MODID,
+        name = References.NAME,
+        version = References.VERSION,
+        dependencies = "required-after:forge@[13.19.0.2130,);",
+        acceptableRemoteVersions = "*",
+        acceptedMinecraftVersions = "[1.11,1.12)"
+)
 public class CompassCoords
 {
     public static Configuration config;
