@@ -17,6 +17,6 @@
   "parent":"",
   "dependencies": [
   ],
-  "requiredMods": [ "Forge" ]
+  "requiredMods": [ "forge" ]
 }
 ]
