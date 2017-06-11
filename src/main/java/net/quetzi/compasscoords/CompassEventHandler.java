@@ -1,8 +1,6 @@
 package net.quetzi.compasscoords;
 
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,9 +14,9 @@ public class CompassEventHandler
     public void onItemUse(PlayerInteractEvent.RightClickItem event)
     {
         if (!event.getWorld().isRemote &&
-                event.getItemStack().getItem() == Items.COMPASS &&
-                !event.getEntityPlayer().capabilities.isCreativeMode &&
-                !event.getEntityPlayer().isSneaking())
+            event.getItemStack().getItem().equals(Items.COMPASS) &&
+            !event.getEntityPlayer().capabilities.isCreativeMode &&
+            !event.getEntityPlayer().isSneaking())
         {
             if (event.getResult() == PlayerInteractEvent.RightClickItem.Result.ALLOW)
             {
