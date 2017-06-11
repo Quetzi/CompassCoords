@@ -11,7 +11,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
 
@@ -19,22 +19,22 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 project.ext {
     major = "3"
-    minor = "3"
+    minor = "2"
     if (System.getenv("BUILD_NUMBER") != null) {
         build = System.getenv("BUILD_NUMBER")
     } else {
         build = "-custom"
     }
-    mcVersion = "1.12"
+    mcVersion = "1.11.2"
 }
 version = "${project.ext.mcVersion}-${project.ext.major}.${project.minor}.${project.build}"
 group = "net.quetzi.compasscoords"
 archivesBaseName = "CompassCoords"
 
 minecraft {
-    version = "${project.ext.mcVersion}-14.21.0.2321"
+    version = "${project.ext.mcVersion}-13.20.0.2223"
     runDir = "eclipse"
-    mappings = "snapshot_20170610"
+    mappings = "snapshot_20170119"
     // replacing stuff in the source
     replace '@MAJOR@', project.major
     replace '@MINOR@', project.minor
