@@ -16,7 +16,7 @@ public class CompassEventHandler
     public void onItemUse(PlayerInteractEvent.RightClickItem event)
     {
         if (!event.getWorld().isRemote &&
-                event.getItemStack().getItem() == Items.COMPASS &&
+                event.getItemStack().getItem().equals(Items.COMPASS) &&
                 !event.getEntityPlayer().capabilities.isCreativeMode &&
                 !event.getEntityPlayer().isSneaking())
         {
