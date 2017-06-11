@@ -16,7 +16,7 @@ public class CompassEventHandler
     {
         if (!event.getWorld().isRemote &&
                 event.getItemStack().getItem() != null &&
-                event.getItemStack().getItem() == Items.COMPASS &&
+                event.getItemStack().getItem().equals(Items.COMPASS) &&
                 !event.getEntityPlayer().capabilities.isCreativeMode &&
                 !event.getEntityPlayer().isSneaking())
         {
