@@ -1,68 +1,114 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'java'
+apply plugin: 'idea'
 
 project.ext {
-    major = "3"
-    minor = "3"
+    major = "4"
+    minor = "0"
     if (System.getenv("BUILD_NUMBER") != null) {
         build = System.getenv("BUILD_NUMBER")
     } else {
         build = "-custom"
     }
-    mcVersion = "1.12"
+    mcVersion = "1.14.4"
 }
 version = "${project.ext.mcVersion}-${project.ext.major}.${project.minor}.${project.build}"
 group = "net.quetzi.compasscoords"
 archivesBaseName = "CompassCoords"
 
 minecraft {
-    version = "${project.ext.mcVersion}-14.21.0.2321"
-    runDir = "eclipse"
-    mappings = "snapshot_20170610"
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
     // replacing stuff in the source
-    replace '@MAJOR@', project.major
-    replace '@MINOR@', project.minor
-    replace '@MC_VERSION@', project.ext.mcVersion
-    replace '@BUILD_NUMBER@', project.build
+    if (System.getenv("CI_PIPELINE_IID") != null) {
+        ant.replace(file: 'src/main/java/net/quetzi/compasscoords/references/References.java', token: '@MAJOR@', value: project.ext.major)
+        ant.replace(file: 'src/main/java/net/quetzi/compasscoords/references/References.java', token: '@MINOR@', value: project.ext.minor)
+        ant.replace(file: 'src/main/java/net/quetzi/compasscoords/references/References.java', token: '@MC_VERSION@', value: project.ext.mcVersion)
+        ant.replace(file: 'src/main/java/net/quetzi/compasscoords/references/References.java', token: '@BUILD_NUMBER@', value: project.ext.build)
+    }
+    runs {
+        client = {
+            // recommended logging data for a userdev environment
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run')
+            mods {
+                morpheus {
+                    source sourceSets.main
+                }
+            }
+        }
+        server = {
+            // recommended logging data for a userdev environment
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            mods {
+                morpheus {
+                    source sourceSets.main
+                }
+            }
+        }
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                morpheus {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
-allprojects {
-    apply plugin: 'java'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.0'
+}
+
+jar {
+    manifest {
+        attributes(["Specification-Title": "CompassCoords",
+                    "Specification-Vendor": "Quetzi",
+                    "Specification-Version": "1", // We are version 1 of the modlauncher specification
+                    "Implementation-Title": project.name,
+                    "Implementation-Version": "${project.version}",
+                    "Implementation-Vendor" :"Quetzi",
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+    }
 }
 
 processResources {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property 'version', project.version
 
-    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include '*.info'
+        include 'META_INF/mods.toml'
 
         // replace version and mcversion
-        expand 'version': project.version, 'mcversion': project.minecraft.version
+        expand 'version':project.version
     }
-
-    // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude 'META_INF/mods.toml'
     }
 }

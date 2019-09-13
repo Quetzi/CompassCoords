@@ -1,0 +1,9 @@
+out
+.dat.nosync*
+*.iml
+*.ipr
+*.iws
+.gradle
+build
+run
+
